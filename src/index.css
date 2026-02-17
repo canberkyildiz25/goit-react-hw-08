@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=Sora:wght@300;400;600&display=swap');
+
+:root {
+  font-family: 'Sora', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #102418;
+  background-color: #e9f3ec;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(144, 209, 166, 0.35), transparent 55%),
+    radial-gradient(circle at 80% 10%, rgba(195, 235, 210, 0.6), transparent 60%),
+    radial-gradient(circle at 50% 90%, rgba(105, 170, 124, 0.3), transparent 50%),
+    linear-gradient(135deg, #e8f5ec, #f7fbf8);
+}
+
+#root {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Fraunces', serif;
+}
+
+button,
+input,
+select {
+  font-family: inherit;
+}

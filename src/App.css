@@ -1,0 +1,350 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 2rem;
+  padding: 2.5rem;
+  border-radius: 32px;
+  background: linear-gradient(135deg, rgba(12, 52, 28, 0.92), rgba(34, 96, 54, 0.92));
+  color: #f4fff7;
+  overflow: hidden;
+  animation: fadeUp 0.8s ease-out;
+}
+
+.hero::before,
+.hero::after {
+  content: '';
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle at 30% 30%, rgba(200, 255, 220, 0.35), transparent 60%);
+  filter: blur(2px);
+  opacity: 0.6;
+}
+
+.hero::before {
+  top: -80px;
+  right: 20%;
+  transform: rotate(15deg);
+}
+
+.hero::after {
+  bottom: -100px;
+  left: 10%;
+  transform: rotate(-12deg);
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  z-index: 1;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+.hero h1 {
+  font-size: clamp(2.6rem, 4vw, 3.6rem);
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  max-width: 420px;
+  opacity: 0.85;
+}
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.hero-stats div {
+  background: rgba(15, 70, 36, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 16px;
+  padding: 0.9rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.hero-stats span {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.hero-stats strong {
+  font-size: 1.4rem;
+}
+
+.hero-card {
+  z-index: 1;
+}
+
+.content {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.panel {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 24px;
+  padding: 1.75rem;
+  box-shadow: 0 18px 30px rgba(16, 35, 24, 0.12);
+  animation: fadeUp 0.9s ease-out;
+}
+
+.panel-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1.25rem;
+}
+
+.panel-header h2 {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+.panel-header p {
+  margin: 0;
+  opacity: 0.65;
+}
+
+.panel-controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.contact-form {
+  background: rgba(255, 255, 255, 0.98);
+  color: #142616;
+  border-radius: 24px;
+  padding: 1.5rem;
+  box-shadow: 0 18px 35px rgba(5, 28, 14, 0.2);
+  display: grid;
+  gap: 1.1rem;
+}
+
+.form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.form-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.form-eyebrow {
+  margin: 0 0 0.2rem;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  color: #2c6b3b;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.form-grid label,
+.search-bar,
+.filter-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-weight: 600;
+  color: #214b2c;
+}
+
+.form-grid input,
+.search-bar input,
+.filter-bar select {
+  border-radius: 12px;
+  border: 1px solid rgba(33, 75, 44, 0.2);
+  padding: 0.7rem 0.9rem;
+  font-size: 0.95rem;
+  background: #f2faf4;
+  color: #17351f;
+}
+
+.form-grid input:focus,
+.search-bar input:focus,
+.filter-bar select:focus {
+  outline: 2px solid rgba(44, 122, 67, 0.35);
+  border-color: rgba(44, 122, 67, 0.5);
+}
+
+.primary-button,
+.ghost-button,
+.danger-button {
+  border: none;
+  border-radius: 999px;
+  padding: 0.7rem 1.4rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.primary-button {
+  background: linear-gradient(135deg, #1f7a3b, #43b06a);
+  color: #f6fff8;
+  box-shadow: 0 14px 24px rgba(15, 70, 36, 0.2);
+}
+
+.primary-button:hover,
+.ghost-button:hover,
+.danger-button:hover {
+  transform: translateY(-1px);
+}
+
+.ghost-button {
+  background: rgba(34, 107, 59, 0.1);
+  color: #1f5a33;
+}
+
+.danger-button {
+  background: rgba(140, 29, 29, 0.15);
+  color: #6e1b1b;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.contact-card {
+  background: #f7fff9;
+  border-radius: 20px;
+  padding: 1.2rem;
+  display: grid;
+  gap: 0.9rem;
+  border: 1px solid rgba(27, 78, 45, 0.1);
+  box-shadow: 0 12px 20px rgba(15, 40, 24, 0.08);
+  animation: floatIn 0.8s ease;
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #1f6f3a, #7dd398);
+  display: grid;
+  place-items: center;
+  color: #f4fff7;
+  font-weight: 700;
+  overflow: hidden;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.contact-details h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.contact-details p {
+  margin: 0.2rem 0 0;
+  color: #2a5a38;
+  font-size: 0.9rem;
+}
+
+.contact-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.empty-state {
+  padding: 1.2rem;
+  border-radius: 16px;
+  background: rgba(22, 72, 40, 0.08);
+  color: #1f5a33;
+  text-align: center;
+}
+
+.error-banner {
+  background: rgba(140, 29, 29, 0.12);
+  color: #7c1a1a;
+  border-radius: 12px;
+  padding: 0.7rem 1rem;
+  margin-bottom: 1rem;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 960px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .hero {
+    padding: 2rem 1.5rem;
+  }
+
+  .hero-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .hero-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-actions {
+    flex-direction: column;
+  }
+}
