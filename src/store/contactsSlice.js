@@ -5,6 +5,7 @@ import {
   fetchContacts,
   updateContact,
 } from '../redux/contactsOps'
+import { logout } from '../redux/authOps'
 
 const contactsSlice = createSlice({
   name: 'contacts',
@@ -70,6 +71,12 @@ const contactsSlice = createSlice({
         state.status = 'failed'
         state.error = action.payload || action.error.message
       })
+      // Logout durumunda kişi listesini temizle
+      .addCase(logout.fulfilled, (state) => {
+        state.items = []
+        state.status = 'idle'
+        state.error = null
+      })
   },
 })
 
@@ -85,7 +92,7 @@ export const selectFilteredContacts = createSelector(
     const normalizedSearch = search.trim().toLowerCase()
     return items.filter((contact) => {
       const matchesSearch = normalizedSearch
-        ? `${contact.name} ${contact.phone} ${contact.email || ''}`
+        ? `${contact.name} ${contact.number || contact.phone || ''} ${contact.email || ''}`
             .toLowerCase()
             .includes(normalizedSearch)
         : true
@@ -93,7 +100,7 @@ export const selectFilteredContacts = createSelector(
       const matchesFilter =
         filter === 'all' ||
         (filter === 'hasEmail' && contact.email) ||
-        (filter === 'hasPhone' && contact.phone)
+        (filter === 'hasPhone' && (contact.phone || contact.number))
 
       return matchesSearch && matchesFilter
     })

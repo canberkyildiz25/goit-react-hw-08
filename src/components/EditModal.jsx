@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateContact } from '../redux/contactsOps'
 import { clearEditingContact } from '../store/uiSlice'
@@ -11,16 +11,14 @@ const emptyContact = {
   avatar: '',
 }
 
-function EditModal() {
+function EditModalContent({ editingContact, onClose }) {
   const dispatch = useDispatch()
-  const editingContact = useSelector((state) => state.ui.editingContact)
-  const [formData, setFormData] = useState(emptyContact)
-
-  useEffect(() => {
-    if (editingContact) {
-      setFormData({ ...emptyContact, ...editingContact })
-    }
-  }, [editingContact])
+  // API'den number geliyor, ama form'da phone kullanıyoruz
+  const [formData, setFormData] = useState(() => ({
+    ...emptyContact,
+    ...editingContact,
+    phone: editingContact.number || editingContact.phone || '', // API'den number gelir
+  }))
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -31,31 +29,22 @@ function EditModal() {
     event.preventDefault()
     const payload = {
       name: formData.name.trim(),
-      phone: formData.phone.trim(),
+      number: formData.phone.trim(), // GoIT API "number" bekliyor
       email: formData.email.trim(),
-      avatar: formData.avatar.trim(),
     }
-    if (!payload.name || !payload.phone) {
+    if (!payload.name || !payload.number) {
       return
     }
     await dispatch(updateContact({ id: editingContact.id, updates: payload }))
-    dispatch(clearEditingContact())
-  }
-
-  const handleClose = () => {
-    dispatch(clearEditingContact())
-  }
-
-  if (!editingContact) {
-    return null
+    onClose()
   }
 
   return (
-    <div className="modal-overlay" onClick={handleClose}>
+    <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h2>Edit contact</h2>
-          <button type="button" className="close-button" onClick={handleClose}>
+          <button type="button" className="close-button" onClick={onClose}>
             ×
           </button>
         </div>
@@ -105,7 +94,7 @@ function EditModal() {
             </label>
           </div>
           <div className="modal-actions">
-            <button type="button" className="ghost-button" onClick={handleClose}>
+            <button type="button" className="ghost-button" onClick={onClose}>
               Cancel
             </button>
             <button type="submit" className="primary-button">
@@ -115,6 +104,27 @@ function EditModal() {
         </form>
       </div>
     </div>
+  )
+}
+
+function EditModal() {
+  const dispatch = useDispatch()
+  const editingContact = useSelector((state) => state.ui.editingContact)
+
+  const handleClose = () => {
+    dispatch(clearEditingContact())
+  }
+
+  if (!editingContact) {
+    return null
+  }
+
+  return (
+    <EditModalContent 
+      key={editingContact.id} 
+      editingContact={editingContact} 
+      onClose={handleClose} 
+    />
   )
 }
 
