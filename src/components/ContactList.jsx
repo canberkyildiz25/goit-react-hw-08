@@ -33,7 +33,7 @@ function ContactList() {
           </div>
           <div className="contact-details">
             <h3>{contact.name}</h3>
-            <p>{contact.phone}</p>
+            <p>{contact.number || contact.phone}</p>
             {contact.email && <p>{contact.email}</p>}
           </div>
           <div className="contact-actions">

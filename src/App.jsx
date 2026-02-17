@@ -1,89 +1,79 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import './App.css'
-import ContactForm from './components/ContactForm'
-import ContactList from './components/ContactList'
-import EditModal from './components/EditModal'
-import FilterBar from './components/FilterBar'
-import SearchBar from './components/SearchBar'
-import {
-  addContact,
-  fetchContacts,
-} from './redux/contactsOps'
-import { selectFilteredContacts } from './store/contactsSlice'
-import { setFilter, setSearch } from './store/filtersSlice'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
+import Layout from './components/Layout'
+import PrivateRoute from './components/PrivateRoute'
+import PublicRoute from './components/PublicRoute'
+import HomePage from './pages/HomePage'
+import RegisterPage from './pages/RegisterPage'
+import LoginPage from './pages/LoginPage'
+import ContactsPage from './pages/ContactsPage'
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Layout />,
+    children: [
+      {
+        index: true,
+        element: <HomePage />,
+      },
+      {
+        path: 'register',
+        element: (
+          <PublicRoute>
+            <RegisterPage />
+          </PublicRoute>
+        ),
+      },
+      {
+        path: 'login',
+        element: (
+          <PublicRoute>
+            <LoginPage />
+          </PublicRoute>
+        ),
+      },
+      {
+        path: 'contacts',
+        element: (
+          <PrivateRoute>
+            <ContactsPage />
+          </PrivateRoute>
+        ),
+      },
+    ],
+  },
+])
 
 function App() {
-  const dispatch = useDispatch()
-  const { items, status, error } = useSelector((state) => state.contacts)
-  const { search, filter } = useSelector((state) => state.filters)
-
-  useEffect(() => {
-    if (status === 'idle') {
-      dispatch(fetchContacts())
-    }
-  }, [dispatch, status])
-
-  const filteredContacts = useSelector(selectFilteredContacts)
-
-  const handleSubmit = (payload) => {
-    dispatch(addContact(payload))
-  }
-
   return (
-    <div className="app">
-      <header className="hero">
-        <div className="hero-content">
-          <p className="eyebrow">Forest contacts</p>
-          <h1>Leafline Directory</h1>
-          <p className="subtitle">
-            Keep your people organized with a calm, green-first contact hub.
-          </p>
-          <div className="hero-stats">
-            <div>
-              <span>Total</span>
-              <strong>{items.length}</strong>
-            </div>
-            <div>
-              <span>Filtered</span>
-              <strong>{filteredContacts.length}</strong>
-            </div>
-            <div>
-              <span>Status</span>
-              <strong>{status === 'loading' ? 'Loading' : 'Ready'}</strong>
-            </div>
-          </div>
-        </div>
-        <div className="hero-card">
-          <ContactForm onSubmit={handleSubmit} />
-        </div>
-      </header>
-
-      <main className="content">
-        <section className="panel">
-          <div className="panel-header">
-            <h2>Search and filter</h2>
-            <p>Find the people you need faster.</p>
-          </div>
-          <div className="panel-controls">
-            <SearchBar value={search} onChange={(value) => dispatch(setSearch(value))} />
-            <FilterBar value={filter} onChange={(value) => dispatch(setFilter(value))} />
-          </div>
-        </section>
-
-        <section className="panel">
-          <div className="panel-header">
-            <h2>Contact list</h2>
-            <p>Manage details, update, or remove contacts.</p>
-          </div>
-          {status === 'failed' && (
-            <div className="error-banner">{error}</div>
-          )}
-          <ContactList />
-        </section>
-      </main>
-      <EditModal />
-    </div>
+    <>
+      <RouterProvider router={router} />
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: '#363636',
+            color: '#fff',
+          },
+          success: {
+            duration: 3000,
+            iconTheme: {
+              primary: '#4ade80',
+              secondary: '#fff',
+            },
+          },
+          error: {
+            duration: 4000,
+            iconTheme: {
+              primary: '#ef4444',
+              secondary: '#fff',
+            },
+          },
+        }}
+      />
+    </>
   )
 }
 

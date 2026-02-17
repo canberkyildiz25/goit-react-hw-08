@@ -13,7 +13,12 @@ const emptyContact = {
 
 function EditModalContent({ editingContact, onClose }) {
   const dispatch = useDispatch()
-  const [formData, setFormData] = useState(() => ({ ...emptyContact, ...editingContact }))
+  // API'den number geliyor, ama form'da phone kullanıyoruz
+  const [formData, setFormData] = useState(() => ({
+    ...emptyContact,
+    ...editingContact,
+    phone: editingContact.number || editingContact.phone || '', // API'den number gelir
+  }))
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -24,11 +29,10 @@ function EditModalContent({ editingContact, onClose }) {
     event.preventDefault()
     const payload = {
       name: formData.name.trim(),
-      phone: formData.phone.trim(),
+      number: formData.phone.trim(), // GoIT API "number" bekliyor
       email: formData.email.trim(),
-      avatar: formData.avatar.trim(),
     }
-    if (!payload.name || !payload.phone) {
+    if (!payload.name || !payload.number) {
       return
     }
     await dispatch(updateContact({ id: editingContact.id, updates: payload }))

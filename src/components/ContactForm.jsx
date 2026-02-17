@@ -19,11 +19,10 @@ function ContactForm({ onSubmit }) {
     event.preventDefault()
     const payload = {
       name: formData.name.trim(),
-      phone: formData.phone.trim(),
+      number: formData.phone.trim(), // GoIT API "number" bekliyor
       email: formData.email.trim(),
-      avatar: formData.avatar.trim(),
     }
-    if (!payload.name || !payload.phone) {
+    if (!payload.name || !payload.number) {
       return
     }
     onSubmit(payload)
